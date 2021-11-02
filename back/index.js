@@ -2,6 +2,9 @@ const express = require('express')
 const app = express()
 const port = 8080
 const mongoose = require('mongoose');
+const cors = require('cors');
+const axios=require('axios');
+
 
 const { MongoClient } = require('mongodb');
 const uri = "mongodb+srv://admin:<123456A>@cluster0.bchew.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
@@ -16,12 +19,20 @@ const Users = require("./models/Users")
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
-})
+});
 
 app.get("/login", async (req, res) => {
 	const users = await Users.find()
 	res.send(users)
-})
+});
+
+app.use('/loginFront', (req, res) => {
+  res.send({
+    token: 'test123'
+  });
+});
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
